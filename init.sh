@@ -2,6 +2,10 @@
 
 set -e
 
+# Get the list of services
+source services.sh
+
+# Stop nginx if it is running
 docker compose down
 
 # Generate a self-signed SSL certificate for localhost
@@ -17,15 +21,6 @@ fi
 
 # Make a directory for the services
 mkdir -p services
-
-# Define the list of services
-declare -a services=(
-    "ds-frontend" 
-    "ds-wagtail" 
-    "ds-search"
-    "ds-frontend-enrichment"
-    "ds-sitemap-search"
-)
 
 # Clone the services if they don't exist and start them
 for service in "${services[@]}"
