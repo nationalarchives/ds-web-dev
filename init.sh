@@ -22,7 +22,7 @@ fi
 # Make a directory for the services
 mkdir -p services
 
-# Clone the services if they don't exist and start them
+# Clone the services if they don't exist
 for service in "${services[@]}"
 do
     if [ ! -d "services/$service" ]
@@ -30,6 +30,18 @@ do
         echo "Cloning $service..."
         git clone "git@github.com:nationalarchives/$service.git" "services/$service"
     fi
+done
+
+# Set up node_modules directories for frontend services
+echo "Setting up node_modules directories for frontend services..."
+mkdir -p services/ds-frontend/node_modules
+mkdir -p services/ds-frontend-enrichment/node_modules
+mkdir -p services/ds-search/node_modules
+mkdir -p services/ds-sitemap-search/node_modules
+
+# Start the services
+for service in "${services[@]}"
+do
     echo "Starting $service..."
     docker compose --file "services/$service/docker-compose.yml" up --detach && echo "✅ Started $service" || echo "❌ Failed to start $service"
     echo
