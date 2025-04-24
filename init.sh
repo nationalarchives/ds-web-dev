@@ -25,11 +25,22 @@ mkdir -p services
 # Clone the services if they don't exist
 for service in "${services[@]}"
 do
-    if [ ! -d "services/$service" ]
+    if [[ ! -d "services/$service" ]]
     then
         echo "Cloning $service..."
         git clone "git@github.com:nationalarchives/$service.git" "services/$service"
         echo
+    fi
+
+    if [[ -f "services/$service/.example.env" ]]
+    then
+        echo "Copying example .env for $service..."
+        cp "services/$service/.example.env" "services/$service/.env"
+        echo
+    elif [[ ! -f "services/$service/.env" ]]
+    then
+        echo "Creating blank .env for $service..."
+        touch "services/$service/.env"
     fi
 done
 
