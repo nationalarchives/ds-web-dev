@@ -29,21 +29,19 @@ do
     then
         echo "Cloning $service..."
         git clone "git@github.com:nationalarchives/$service.git" "services/$service"
+        echo
     fi
 done
 
 # Set up node_modules directories for frontend services
 echo "Setting up node_modules directories for frontend services..."
-mkdir -p services/ds-frontend/node_modules
-mkdir -p services/ds-frontend-enrichment/node_modules
-mkdir -p services/ds-search/node_modules
-mkdir -p services/ds-sitemap-search/node_modules
+mkdir -p services/ds-frontend/node_modules services/ds-frontend-enrichment/node_modules services/ds-search/node_modules services/ds-sitemap-search/node_modules
 
 # Start the services
 for service in "${services[@]}"
 do
     echo "Starting $service..."
-    docker compose --file "services/$service/docker-compose.yml" up --detach && echo "✅ Started $service" || echo "❌ Failed to start $service"
+    docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
     echo
 done
 
@@ -56,7 +54,7 @@ docker compose --file services/ds-sitemap-search/docker-compose.yml exec app cp 
 
 # Start the nginx service
 echo "Starting nginx..."
-docker compose up --build --detach && echo "✅ Started nginx" || echo "❌ Failed to start nginx"
+docker compose up --build --detach --wait --wait-timeout 60 && echo "✅ Started nginx" || echo "❌ Failed to start nginx"
 
 # Pull a copy of the development database
 echo "Pulling a copy of the development database..."
