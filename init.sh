@@ -5,6 +5,9 @@ set -e
 # Get the list of services
 source services.sh
 
+# Compose can now delegate builds to bake for better performance
+COMPOSE_BAKE=true
+
 # Stop nginx if it is running
 docker compose down
 
@@ -12,11 +15,11 @@ docker compose down
 mkdir -p ssl
 if [[ ! -f ssl/localhost.crt || ! -f ssl/localhost.key ]];
 then
-    echo "Generating self-signed SSL certificate for localhost..."
+    echo "Generating self-signed SSL certificate for localhost/nginx..."
     openssl req -x509 -out ssl/localhost.crt -keyout ssl/localhost.key \
         -newkey rsa:2048 -nodes -sha256 \
         -subj '/CN=localhost' -extensions EXT -config <( \
-        printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+        printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost,DNS:nginx\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
 fi
 
 # Make a directory for the services
@@ -44,6 +47,13 @@ do
     fi
 done
 
+# Clone the website tests
+if [[ ! -d "tests" ]]
+then
+    echo "Cloning tests..."
+    git clone git@github.com:nationalarchives/ds-tna-website-tests.git tests
+fi
+
 # Set up node_modules directories for frontend services
 echo "Setting up node_modules directories for frontend services..."
 mkdir -p services/ds-frontend/node_modules services/ds-frontend-enrichment/node_modules services/ds-search/node_modules services/ds-sitemap-search/node_modules
@@ -65,7 +75,7 @@ docker compose --file services/ds-sitemap-search/docker-compose.yml exec app cp 
 
 # Start the nginx service
 echo "Starting nginx..."
-docker compose up --build --detach --wait --wait-timeout 60 && echo "✅ Started nginx" || echo "❌ Failed to start nginx"
+docker compose up --build --detach --wait --wait-timeout 60 nginx && echo "✅ Started nginx" || echo "❌ Failed to start nginx"
 
 # Pull a copy of the development database
 echo "Pulling a copy of the development database..."

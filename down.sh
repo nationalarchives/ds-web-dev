@@ -6,12 +6,12 @@ set -e
 source services.sh
 
 # Stop nginx
-docker compose down
+docker compose stop
 
-# Start the services
+# Stop the services
 for service in "${services[@]}"
 do
-    echo "Starting $service..."
-    docker compose --file "services/$service/docker-compose.yml" down && echo "✅ Stopped $service" || echo "❌ Failed to stop $service"
+    echo "Stopping $service..."
+    docker compose --file "services/$service/docker-compose.yml" stop && echo "✅ Stopped $service" || echo "❌ Failed to stop $service"
     echo
 done

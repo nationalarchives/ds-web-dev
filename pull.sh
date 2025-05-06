@@ -2,6 +2,11 @@
 
 set -e
 
+# Pull this repository
+git pull
+echo "✅ Pulled latest changes for ds-web-dev"
+echo
+
 # Get the list of services
 source services.sh
 
@@ -13,9 +18,24 @@ do
     BRANCH="$(git rev-parse --abbrev-ref HEAD)"
     if [[ "$BRANCH" == "main" ]]; then
         git pull origin main && echo "✅ Pulled latest changes for $service" || echo "❌ Failed to pull latest changes for $service"
+        echo "Rebuilding $service..."
+        docker compose build && echo "✅ Rebuilt $service" || echo "❌ Failed to rebuild $service"
     else
         echo "⚠️ You are on the $BRANCH branch. Please switch to the main branch to pull the latest changes."
     fi
     echo
     cd "../.."
 done
+
+echo "Pulling latest changes for tests..."
+cd tests
+if [[ "$BRANCH" == "main" ]]; then
+    git pull origin main && echo "✅ Pulled latest changes for $service" || echo "❌ Failed to pull latest changes for $service"
+else
+    echo "⚠️ You are on the $BRANCH branch. Please switch to the main branch to pull the latest changes."
+fi
+echo
+cd ".."
+
+# Restart any services that might be running
+./up.sh

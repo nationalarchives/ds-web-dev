@@ -8,3 +8,12 @@ services:
       - ./ssl/localhost.crt:/etc/nginx/ssl/live/localhost/localhost.crt:ro
       - ./ssl/localhost.key:/etc/nginx/ssl/live/localhost/localhost.key:ro
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+
+  tests:
+    build:
+      context: tests
+      dockerfile: ../tests.Dockerfile
+    environment:
+      - TEST_DOMAIN=https://nginx
+    volumes:
+      - ./tests:/tests

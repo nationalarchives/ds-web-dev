@@ -5,6 +5,9 @@ set -e
 # Get the list of services
 source services.sh
 
+# Compose can now delegate builds to bake for better performance
+COMPOSE_BAKE=true
+
 # Start the services
 for service in "${services[@]}"
 do
@@ -14,5 +17,5 @@ do
 done
 
 # Start the nginx service
-echo "Starting nginx..."
-docker compose up --build --detach --wait --wait-timeout 60 && echo "✅ Started nginx" || echo "❌ Failed to start nginx"
+echo "Restarting nginx..."
+docker compose up --build --detach --wait --wait-timeout 60 nginx && echo "✅ Started nginx" || echo "❌ Failed to start nginx"

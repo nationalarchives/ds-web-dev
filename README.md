@@ -17,9 +17,15 @@ After running `./init.sh`, the required services will be cloned into the `servic
 # Pull the latest version of all services that are checked out on the main branch
 ./pull.sh
 
+# Run the test suite
+./test.sh
+
 # Start all the services
 ./up.sh
 
 # Stop all the services
 ./down.sh
+
+# Rebuild all the services
+./rebuild.sh
 ```
