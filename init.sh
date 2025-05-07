@@ -56,8 +56,8 @@ then
 fi
 
 # Set up node_modules directories for frontend services
-# echo "Setting up node_modules directories for frontend services..."
-# mkdir -p services/ds-frontend/node_modules services/ds-frontend-enrichment/node_modules services/ds-search/node_modules services/ds-sitemap-search/node_modules
+echo "Setting up node_modules directories for frontend services..."
+mkdir -p services/ds-frontend/node_modules services/ds-frontend-enrichment/node_modules services/ds-search/node_modules services/ds-sitemap-search/node_modules
 
 # Start the services
 for service in "${services[@]}"
