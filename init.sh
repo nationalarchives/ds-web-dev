@@ -55,21 +55,10 @@ then
     cp "tests/.example.env" "tests/.env"
 fi
 
-# Set up node_modules directories for frontend services
-# echo "Setting up node_modules directories for frontend services..."
-# mkdir -p services/ds-frontend/node_modules services/ds-frontend-enrichment/node_modules services/ds-search/node_modules services/ds-sitemap-search/node_modules
-
 # Start the services
 for service in "${services[@]}"
 do
     echo "Starting $service..."
-    # if [[ -d "services/$service/node_modules" ]]
-    # then
-    #     docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 120 || echo "Failed to start $service"
-    #     echo "Changing ownership of node_modules directory for $service..."
-    #     sudo chown -fR "$USER:$USER" "services/$service/node_modules"
-    #     sudo chmod -fR 777 "services/$service/node_modules"
-    # fi
     docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 120 && echo "✅ Started $service" || echo "❌ Failed to start $service"
     echo
 done
