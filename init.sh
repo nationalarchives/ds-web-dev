@@ -68,6 +68,7 @@ do
     then
         echo "Changing ownership of node_modules directory for $service..."
         sudo chown -R "$USER:$USER" "services/$service/node_modules"
+        docker compose --file "services/$service/docker-compose.yml" up --detach --wait     --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
     fi
     echo
 done
