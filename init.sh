@@ -83,4 +83,4 @@ echo "Populating the sitemap search database..."
 docker compose --file services/ds-sitemap-search/docker-compose.yml exec --detach app poetry run python populate.py
 
 # Open the browser
-xdg-open https://localhost || open https://localhost || start https://localhost
+xdg-open https://localhost || open https://localhost || start https://localhost || explorer.exe https://localhost
