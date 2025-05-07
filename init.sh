@@ -56,14 +56,19 @@ then
 fi
 
 # Set up node_modules directories for frontend services
-echo "Setting up node_modules directories for frontend services..."
-mkdir -p services/ds-frontend/node_modules services/ds-frontend-enrichment/node_modules services/ds-search/node_modules services/ds-sitemap-search/node_modules
+# echo "Setting up node_modules directories for frontend services..."
+# mkdir -p services/ds-frontend/node_modules services/ds-frontend-enrichment/node_modules services/ds-search/node_modules services/ds-sitemap-search/node_modules
 
 # Start the services
 for service in "${services[@]}"
 do
     echo "Starting $service..."
     docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
+    if [[ ! -d "services/$service/node_modules" ]]
+    then
+        echo "Changing ownership of node_modules directory for $service..."
+        sudo chown -R "$USER:$USER" "services/$service/node_modules"
+    fi
     echo
 done
 
