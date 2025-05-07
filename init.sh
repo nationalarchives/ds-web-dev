@@ -63,9 +63,11 @@ mkdir -p services/ds-frontend/node_modules services/ds-frontend-enrichment/node_
 for service in "${services[@]}"
 do
     echo "Starting $service..."
-    nvm use $(<"services/${service}"/.nvmrc) || echo "Failed to set nvm version for $service"
-    npm install --prefix "services/$service" || echo "Failed to install npm dependencies for $service"
-    docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
+    cd "services/$service"
+    nvm use || echo "Failed to set nvm version for $service"
+    npm install || echo "Failed to install npm dependencies for $service"
+    docker compose up --detach --wait --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
+    cd ../..
     echo
 done
 
