@@ -52,6 +52,7 @@ if [[ ! -d "tests" ]]
 then
     echo "Cloning tests..."
     git clone git@github.com:nationalarchives/ds-tna-website-tests.git tests
+    cp "tests/.example.env" "tests/.env"
 fi
 
 # Set up node_modules directories for frontend services
