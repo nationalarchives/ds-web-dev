@@ -67,9 +67,9 @@ do
     if [[ -d "services/$service/node_modules" ]]
     then
         echo "Changing ownership of node_modules for $service..."
-        chown -fR $USER "services/$service/node_modules"
+        chown -fR $USER:$USER "services/$service/node_modules"
+        docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
     fi
-    docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
     echo
 done
 
