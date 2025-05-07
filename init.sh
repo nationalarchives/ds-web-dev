@@ -63,13 +63,13 @@ mkdir -p services/ds-frontend/node_modules services/ds-frontend-enrichment/node_
 for service in "${services[@]}"
 do
     echo "Starting $service..."
-    docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
     if [[ -d "services/$service/node_modules" ]]
     then
+        docker compose --file "services/$service/docker-compose.yml" up app --detach
         echo "Changing ownership of node_modules directory for $service..."
         sudo chown -R "$USER:$USER" "services/$service/node_modules"
-        docker compose --file "services/$service/docker-compose.yml" up --detach --wait     --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
     fi
+    docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
     echo
 done
 
