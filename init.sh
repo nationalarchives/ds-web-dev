@@ -64,12 +64,6 @@ for service in "${services[@]}"
 do
     echo "Starting $service..."
     docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
-    if [[ -d "services/$service/node_modules" ]]
-    then
-        echo "Changing ownership of node_modules for $service..."
-        sudo chown -fR $USER:$USER "services/$service/node_modules"
-        docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
-    fi
     echo
 done
 
