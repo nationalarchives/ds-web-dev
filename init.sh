@@ -65,12 +65,12 @@ do
     echo "Starting $service..."
     # if [[ -d "services/$service/node_modules" ]]
     # then
-    #     docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 60 || echo "Failed to start $service"
+    #     docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 120 || echo "Failed to start $service"
     #     echo "Changing ownership of node_modules directory for $service..."
     #     sudo chown -fR "$USER:$USER" "services/$service/node_modules"
     #     sudo chmod -fR 777 "services/$service/node_modules"
     # fi
-    docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 60 && echo "✅ Started $service" || echo "❌ Failed to start $service"
+    docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 120 && echo "✅ Started $service" || echo "❌ Failed to start $service"
     echo
 done
 
@@ -83,7 +83,7 @@ docker compose --file services/ds-sitemap-search/docker-compose.yml exec app cp 
 
 # Start the nginx service
 echo "Starting nginx..."
-docker compose up --build --detach --wait --wait-timeout 60 nginx && echo "✅ Started nginx" || echo "❌ Failed to start nginx"
+docker compose up --build --detach --wait --wait-timeout 120 nginx && echo "✅ Started nginx" || echo "❌ Failed to start nginx"
 
 # Pull a copy of the development database
 echo "Pulling a copy of the development database..."
