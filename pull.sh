@@ -3,8 +3,7 @@
 set -e
 
 # Pull this repository
-git pull
-echo "✅ Pulled latest changes for ds-web-dev"
+git pull && echo "✅ Pulled latest changes for ds-web-dev"
 echo
 
 # Get the list of services
@@ -23,8 +22,8 @@ do
     else
         echo "⚠️ You are on the $BRANCH branch. Please switch to the main branch to pull the latest changes."
     fi
-    echo
     cd "../.."
+    echo
 done
 
 echo "Pulling latest changes for tests..."
