@@ -17,7 +17,7 @@ After running `./init.sh`, the required services will be cloned into the `servic
 # Pull the latest version of all services that are checked out on the main branch
 ./pull.sh
 
-# Show which branche your services have checked out
+# Show which branches your services have checked out
 ./branches.sh
 
 # Run the test suite
