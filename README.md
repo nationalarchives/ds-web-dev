@@ -9,7 +9,9 @@ A local development setup for all the services required to run `nationalarchives
 ./init.sh
 ```
 
-After running `./init.sh`, the required services will be cloned into the `services` directory. From there, you may need to add the required `.env` files to get them to work.
+After running `./init.sh`, the required services will be cloned into the `services` directory.
+
+Services that have an `example.env` file will have a copy made for `.env`. From there, you may need to add the required variables in your `.env` files to get the service to work.
 
 ## Other commands
 
