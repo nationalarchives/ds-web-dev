@@ -8,6 +8,7 @@ services:
       - ./ssl/localhost.crt:/etc/nginx/ssl/live/localhost/localhost.crt:ro
       - ./ssl/localhost.key:/etc/nginx/ssl/live/localhost/localhost.key:ro
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ds-wagtail_media:/usr/share/nginx/html/media:ro
 
   tests:
     build:
@@ -17,3 +18,7 @@ services:
       - TEST_DOMAIN=https://nginx
     volumes:
       - ./tests:/tests
+
+volumes:
+  ds-wagtail_media:
+    external: true
