@@ -31,6 +31,9 @@ Services that have an `example.env` file will have a copy made for `.env`. From 
 # Stop all the services
 ./down.sh
 
+# Show the status of all services
+./status.sh
+
 # Rebuild all the services
 ./rebuild.sh
 ```
