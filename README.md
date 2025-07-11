@@ -36,4 +36,7 @@ Services that have an `example.env` file will have a copy made for `.env`. From 
 
 # Rebuild all the services
 ./rebuild.sh
+
+# Prune old branches for all services
+./prune.sh
 ```
