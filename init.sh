@@ -67,7 +67,7 @@ done
 echo "Set up the frontend dependencies..."
 docker compose --file services/ds-frontend/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
 docker compose --file services/ds-frontend-enrichment/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
-docker compose --file services/ds-search/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
+docker compose --file services/ds-catalogue/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
 docker compose --file services/ds-sitemap-search/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
 
 # Start the nginx service

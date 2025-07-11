@@ -4,7 +4,7 @@
 declare -a services=(
     "ds-frontend"
     "ds-wagtail"
-    "ds-search"
+    "ds-catalogue"
     "ds-frontend-enrichment"
     "ds-sitemap-search"
 )
