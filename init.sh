@@ -69,6 +69,7 @@ docker compose --file services/ds-frontend/docker-compose.yml exec app cp -r /ap
 docker compose --file services/ds-frontend-enrichment/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
 docker compose --file services/ds-catalogue/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
 docker compose --file services/ds-sitemap-search/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
+docker compose --file services/ds-request-service-record/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
 
 # Start the nginx service
 echo "Starting nginx..."
