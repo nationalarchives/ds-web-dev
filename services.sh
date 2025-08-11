@@ -8,4 +8,5 @@ declare -a services=(
     "ds-frontend-enrichment"
     "ds-sitemap-search"
     "ds-request-service-record"
+    "ds-service-status"
 )
