@@ -40,10 +40,10 @@ do
         echo "Copying example .env for $service..."
         cp "services/$service/.example.env" "services/$service/.env"
         echo
-    elif [[ ! -f "services/$service/.env" ]]
-    then
-        echo "Creating blank .env for $service..."
-        touch "services/$service/.env"
+    # elif [[ ! -f "services/$service/.env" ]]
+    # then
+    #     echo "Creating blank .env for $service..."
+    #     touch "services/$service/.env"
     fi
 done
 
