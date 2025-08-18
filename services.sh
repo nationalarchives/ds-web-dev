@@ -9,4 +9,5 @@ declare -a services=(
     "ds-sitemap-search"
     "ds-request-service-record"
     "ds-service-status"
+    "ds-forms"
 )
