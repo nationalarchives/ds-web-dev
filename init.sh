@@ -52,7 +52,7 @@ if [[ ! -d "tests" ]]
 then
     echo "Cloning tests..."
     git clone git@github.com:nationalarchives/ds-tna-website-tests.git tests
-    cp "tests/.example.env" "tests/.env"
+    # cp "tests/.example.env" "tests/.env"
 fi
 
 # Start the services
