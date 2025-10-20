@@ -18,4 +18,4 @@ done
 
 # Start the nginx service
 echo "Restarting nginx..."
-docker compose up --build --detach --wait --wait-timeout 120 nginx && echo "✅ Started nginx" || echo "❌ Failed to start nginx"
+docker compose restart nginx && echo "✅ Started nginx" || echo "❌ Failed to start nginx"
