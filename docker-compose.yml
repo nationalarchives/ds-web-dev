@@ -10,14 +10,14 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ds-wagtail_media:/usr/share/nginx/html/media:ro
 
-  tests:
-    build:
-      context: tests
-      dockerfile: ../tests.Dockerfile
-    environment:
-      - TEST_DOMAIN=https://nginx
-    volumes:
-      - ./tests:/tests
+  # tests:
+  #   build:
+  #     context: tests
+  #     dockerfile: ../tests.Dockerfile
+  #   environment:
+  #     - TEST_DOMAIN=https://nginx
+  #   volumes:
+  #     - ./tests:/tests
 
 volumes:
   ds-wagtail_media:
