@@ -22,6 +22,9 @@ Services that have an `example.env` file will have a copy made for `.env`. From 
 # Show which branches your services have checked out
 ./branches.sh
 
+# Show the git status of each service
+./gitstatus.sh
+
 # Run the test suite
 ./test.sh
 
@@ -37,6 +40,9 @@ Services that have an `example.env` file will have a copy made for `.env`. From 
 # Rebuild all the services
 ./rebuild.sh
 
-# Prune old branches for all services
+# Prune old branches and remove git stashes for all services
 ./prune.sh
+
+# Upgrade TNA Frontend and TNA Frontend Jinja on all services
+./tna_frontend_upgrade_all.sh
 ```
