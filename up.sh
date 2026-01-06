@@ -12,10 +12,10 @@ COMPOSE_BAKE=true
 for service in "${services[@]}"
 do
     echo "Starting $service..."
-    docker compose --file "services/$service/docker-compose.yml" up --detach --wait --wait-timeout 120 && echo "✅ Started $service" || echo "❌ Failed to start $service"
+    docker compose --file "services/$service/docker-compose.yml" up --remove-orphans --detach --wait --wait-timeout 120 && echo "✅ Started $service" || echo "❌ Failed to start $service"
     echo
 done
 
 # Start the nginx service
 echo "Restarting nginx..."
-docker compose restart nginx && echo "✅ Started nginx" || echo "❌ Failed to start nginx"
+docker compose up --build --detach --wait --wait-timeout 120 nginx && docker compose restart nginx && echo "✅ Started nginx" || echo "❌ Failed to start nginx"
