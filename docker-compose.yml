@@ -10,6 +10,34 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ds-wagtail_media:/usr/share/nginx/html/media:ro
 
+  wagtail-docs:
+    build:
+      context: services/ds-frontend
+    environment:
+      - ENVIRONMENT_NAME=localhost
+      - ALLOW_INSECURE=true
+      - CONFIG=config.Develop
+      - SECRET_KEY=abc123
+      - NPM_DEVELOP_COMMAND=dev
+      - WAGTAIL_API_URL=http://host.docker.internal:8000/api/v2
+      - WAGTAIL_SITE_HOSTNAME=wagtail.localhost
+      - COOKIE_DOMAIN=localhost
+      - CSP_IMG_SRC='self',*.localhost,*.google-analytics.com,*.gstatic.com,*.nationalarchives.gov.uk,i.ytimg.com,img.youtube.com,maps.googleapis.com
+      - CSP_SCRIPT_SRC='self',*.youtube.com,*.localhost
+      - CSP_STYLE_SRC='self',*.localhost,fonts.googleapis.com,p.typekit.net,use.typekit.net,'unsafe-inline'
+      - CSP_FONT_SRC='self',fonts.gstatic.com,use.typekit.net
+      - CSP_CONNECT_SRC='self',*.localhost,*.google-analytics.com,*.analytics.google.com,noembed.com,sentry.io
+      - CSP_MEDIA_SRC='self',*.localhost
+      - CSP_WORKER_SRC='self',blob:,*.localhost
+      - CSP_FRAME_SRC='self',*.youtube-nocookie.com,https://www.openstreetmap.org
+      - CSP_FEATURE_PICTURE_IN_PICTURE='self',https://www.youtube-nocookie.com
+      - CSP_FRAME_ANCESTORS=wagtail.localhost
+    ports:
+      - 8002:8080
+    healthcheck:
+      start_period: 10s
+      start_interval: 2s
+
   # tests:
   #   build:
   #     context: tests
