@@ -77,7 +77,7 @@ docker compose up --build --detach --wait --wait-timeout 120 nginx && echo "✅ 
 
 # Pull a copy of the development database
 echo "Pulling a copy of the development database..."
-docker compose --file services/ds-wagtail/docker-compose.yml exec dev pull
+docker compose --file services/ds-wagtail/docker-compose.yml exec app pull
 
 # Populate the sitemap search database in the background
 echo "Populating the sitemap search database..."
