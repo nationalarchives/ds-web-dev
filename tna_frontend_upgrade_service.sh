@@ -8,7 +8,7 @@ TNA_FRONTEND_VERSION=$2
 TNA_FRONTEND_JINJA_VERSION=$3
 
 # Error if no application directory was passed
-if [ -z "$APPLICATION_DIRECTORY" ]
+if [[ -z "$APPLICATION_DIRECTORY" ]]
 then
   echo -e "Error: application directory not passed\n";
   echo "PARAMETERS"
@@ -27,7 +27,7 @@ then
 fi
 
 # Error if no version was passed
-if [ -z "$TNA_FRONTEND_VERSION" ]
+if [[ -z "$TNA_FRONTEND_VERSION" ]]
 then
   echo -e "Error: versions of TNA Frontend not specified\n";
   echo "PARAMETERS"
@@ -39,7 +39,7 @@ then
 fi
 
 # If no TNA Frontend Jinja version is passed, use the same as TNA Frontend
-if [ -z "$TNA_FRONTEND_JINJA_VERSION" ]
+if [[ -z "$TNA_FRONTEND_JINJA_VERSION" ]]
 then
   TNA_FRONTEND_JINJA_VERSION=$TNA_FRONTEND_VERSION
 fi

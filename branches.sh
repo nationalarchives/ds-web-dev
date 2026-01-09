@@ -11,7 +11,8 @@ do
     # Get the length of the service name
     SERVICE_NAME_LENGTH=${#service}
     # Update the longest service name length if necessary
-    if [ $SERVICE_NAME_LENGTH -gt $LONGEST_SERVICE_NAME_LENGTH ]; then
+    if [[ $SERVICE_NAME_LENGTH -gt $LONGEST_SERVICE_NAME_LENGTH ]]
+    then
         LONGEST_SERVICE_NAME_LENGTH=$SERVICE_NAME_LENGTH
     fi
 done
