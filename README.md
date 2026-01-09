@@ -13,6 +13,12 @@ After running `./init.sh`, the required services will be cloned into the `servic
 
 Services that have an `example.env` file will have a copy made for `.env`. From there, you may need to add the required variables in your `.env` files to get the service to work.
 
+### Initialise with a Wagtail database dump
+
+To start Wagtail using an existing database dump, place your SQL file in the root of this project, called `wagtail-init.sql`.
+
+When running `./init.sh`, there is a check made for this file and if it exists, Wagtail will import the dumped database.
+
 ## Other commands
 
 ```sh

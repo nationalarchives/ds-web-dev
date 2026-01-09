@@ -5,3 +5,4 @@
 services
 ssl
 tests
+wagtail-init.sql

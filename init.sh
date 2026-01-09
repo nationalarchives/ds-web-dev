@@ -20,6 +20,7 @@ then
         -newkey rsa:2048 -nodes -sha256 \
         -subj '/CN=*.localhost' -extensions EXT -config <( \
         printf "[dn]\nCN=*.localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost,DNS:nginx\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+    echo
 fi
 
 # Make a directory for the services
@@ -44,6 +45,7 @@ do
     # then
     #     echo "Creating blank .env for $service..."
     #     touch "services/$service/.env"
+    #     echo
     fi
 done
 
@@ -53,6 +55,7 @@ then
     echo "Cloning tests..."
     git clone git@github.com:nationalarchives/ds-tna-website-tests.git tests
     # cp "tests/.example.env" "tests/.env"
+    echo
 fi
 
 # Start the services
@@ -74,10 +77,25 @@ docker compose --file services/ds-request-service-record/docker-compose.yml exec
 # Start the nginx service
 echo "Starting nginx..."
 docker compose up --build --detach --wait --wait-timeout 120 nginx && echo "✅ Started nginx" || echo "❌ Failed to start nginx"
+echo
 
-# Pull a copy of the development database
-echo "Pulling a copy of the development database..."
-docker compose --file services/ds-wagtail/docker-compose.yml exec app pull
+if [[ -f wagtail-init.sql ]]
+then
+    # Import the wagtail-init.sql file into the Wagtail database
+    echo "Importing wagtail-init.sql into the Wagtail database..."
+    cp wagtail-init.sql services/ds-wagtail/dumps/wagtail-init.sql
+    cd services/ds-wagtail
+    ./dev/local-db-restore wagtail-init.sql
+    cd ../..
+    echo
+else
+    # Pull a copy of the development database
+    echo "Pulling a copy of the development database..."
+    cd services/ds-wagtail
+    ./dev/pull-data
+    cd ../..
+    echo
+fi
 
 # Populate the sitemap search database in the background
 echo "Populating the sitemap search database..."
