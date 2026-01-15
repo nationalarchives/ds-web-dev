@@ -6,6 +6,7 @@ declare -a services=(
     "ds-forms"
     "ds-frontend"
     "ds-frontend-enrichment"
+    "ds-hospital-records"
     "ds-request-service-record"
     "ds-service-status"
     "ds-sitemap-search"
