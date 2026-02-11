@@ -73,6 +73,7 @@ docker compose --file services/ds-frontend-enrichment/docker-compose.yml exec ap
 docker compose --file services/ds-catalogue/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
 docker compose --file services/ds-sitemap-search/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
 docker compose --file services/ds-request-service-record/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
+docker compose --file services/wa-frontend/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
 
 # Start the nginx service
 echo "Starting nginx..."
@@ -96,6 +97,21 @@ else
     cd ../..
     echo
 fi
+
+# Create an API token for the Wagtail admin user and update ds-frontend and wa-frontend .env files
+echo "Creating Wagtail API token and updating frontend .env files..."
+API_TOKEN=$(docker compose --file services/ds-wagtail/docker-compose.yml exec app poetry run python manage.py manage_api_token localhost --refresh --quiet)
+sed -i .bak -r -e 's/WAGTAIL_API_KEY=[^\n]*/WAGTAIL_API_KEY='"$API_TOKEN"'/' services/ds-frontend/.env
+rm -f services/ds-frontend/.env.bak
+docker compose --file "services/ds-frontend/docker-compose.yml" up --detach --wait --wait-timeout 120 app
+sed -i .bak -r -e 's/WAGTAIL_API_KEY=[^\n]*/WAGTAIL_API_KEY='"$API_TOKEN"'/' services/wa-frontend/.env
+rm -f services/wa-frontend/.env.bak
+docker compose --file "services/wa-frontend/docker-compose.yml" up --detach --wait --wait-timeout 120 app
+rm -f .env
+
+# Update the root .env file with the Wagtail API token for use by the documentation site
+echo "WAGTAIL_API_KEY=$API_TOKEN" >> .env
+docker compose up --detach --wait --wait-timeout 120 wagtail-docs
 
 # Populate the sitemap search database in the background
 echo "Populating the sitemap search database..."

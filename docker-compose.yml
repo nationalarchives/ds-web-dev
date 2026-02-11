@@ -1,6 +1,8 @@
 services:
   nginx:
     image: nginx:stable
+    depends_on:
+      - wagtail-docs
     ports:
       - 80:80
       - 443:443
@@ -15,11 +17,10 @@ services:
       context: services/ds-frontend
     environment:
       - ENVIRONMENT_NAME=localhost
-      - ALLOW_INSECURE=true
-      - CONFIG=config.Develop
+      - APPLICATION_PROTOCOL=http
       - SECRET_KEY=abc123
-      - NPM_DEVELOP_COMMAND=dev
       - WAGTAIL_API_URL=http://host.docker.internal:8000/api/v2
+      - WAGTAIL_API_KEY
       - WAGTAIL_SITE_HOSTNAME=wagtail.localhost
       - COOKIE_DOMAIN=localhost
       - CSP_IMG_SRC='self',*.localhost,*.google-analytics.com,*.gstatic.com,*.nationalarchives.gov.uk,i.ytimg.com,img.youtube.com,maps.googleapis.com
@@ -32,8 +33,6 @@ services:
       - CSP_FRAME_SRC='self',*.youtube-nocookie.com,https://www.openstreetmap.org
       - CSP_FEATURE_PICTURE_IN_PICTURE='self',https://www.youtube-nocookie.com
       - CSP_FRAME_ANCESTORS=wagtail.localhost
-    ports:
-      - 8002:8080
     healthcheck:
       start_period: 10s
       start_interval: 2s
