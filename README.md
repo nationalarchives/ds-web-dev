@@ -15,7 +15,7 @@ Services that have an `example.env` file will have a copy made for `.env`. From 
 
 ### Initialise with a Wagtail database dump
 
-To start Wagtail using an existing database dump, place your SQL file in the root of this project, called `wagtail-init.sql`.
+To start Wagtail using an existing database dump, place your SQL file in the root of **this** project, called `wagtail-init.sql`.
 
 When running `./init.sh`, there is a check made for this file and if it exists, Wagtail will import the dumped database.
 
