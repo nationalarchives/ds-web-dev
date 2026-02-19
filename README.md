@@ -49,6 +49,9 @@ When running `./init.sh`, there is a check made for this file and if it exists, 
 # Prune old branches and remove git stashes for all services
 ./prune.sh
 
+# Update the local Wagtail API keys and restart the relevant services
+./refresh_wagtail_api_keys.sh
+
 # Upgrade TNA Frontend and TNA Frontend Jinja on all services
 ./tna_frontend_upgrade_all.sh
 ```
