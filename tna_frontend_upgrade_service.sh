@@ -67,7 +67,7 @@ then
     if docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" exec app poetry show tna-frontend-jinja > /dev/null 2>&1;
     then
         echo "Updating tna-frontend-jinja to version $TNA_FRONTEND_JINJA_VERSION"
-        docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" exec app poetry add tna-frontend-jinja="$TNA_FRONTEND_JINJA_VERSION"
+        docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" exec app poetry add tna-frontend-jinja="$TNA_FRONTEND_JINJA_VERSION" --no-cache
     else
         echo "tna-frontend-jinja not found in pyproject.toml, skipping..."
     fi
