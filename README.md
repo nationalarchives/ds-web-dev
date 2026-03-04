@@ -5,6 +5,9 @@ A local development setup for all the services required to run `nationalarchives
 ## Quickstart
 
 ```sh
+# If you want to pull content and media from the development site, log in with the AWS CLI
+aws sso login
+
 # Clone, set up and start all the services
 ./init.sh
 ```
@@ -15,9 +18,9 @@ Services that have an `example.env` file will have a copy made for `.env`. From 
 
 ### Initialise with a Wagtail database dump
 
-To start Wagtail using an existing database dump, place your SQL file in the root of **this** project, called `wagtail-init.sql`.
+Rather than pulling content from AWS (if you don't have access to do so), you can initialise Wagtail using a database dump. Place your SQL file in the root of **this** project (`ds-web-dev`) and call it `wagtail-init.sql`.
 
-When running `./init.sh`, there is a check made for this file and if it exists, Wagtail will import the dumped database.
+When running `./init.sh`, there is a check for this file and if it exists, Wagtail will import the dumped database instead of pulling from AWS.
 
 ## Other commands
 
