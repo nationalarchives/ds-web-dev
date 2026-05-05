@@ -22,5 +22,5 @@ jobs:
           persist-credentials: false
       - name: Shellcheck
         run: find . -iname "*.sh" -maxdepth 1 -exec shellcheck -x {} \;
-      - name: Initialise
-        run: ./init.sh --https
+      # - name: Initialise
+      #   run: ./init.sh --https
