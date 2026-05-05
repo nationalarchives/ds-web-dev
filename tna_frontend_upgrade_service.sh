@@ -49,29 +49,14 @@ echo "Updating TNA Frontend in $APPLICATION_DIRECTORY..."
 # Start the application to ensure dependencies can be updated
 docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" up --remove-orphans --detach --wait --wait-timeout 120
 
-# Update TNA Frontend in package.json
-if [[ -f "$APPLICATION_DIRECTORY/package.json" ]]
-then
-    if jq 'has(.dependencies."@nationalarchives/frontend")' "$APPLICATION_DIRECTORY/package.json" > /dev/null;
-    then
-        echo "Updating @nationalarchives/frontend to version $TNA_FRONTEND_VERSION"
-        docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" exec app bash -c ". tna-nvm && npm install --save-exact @nationalarchives/frontend@$TNA_FRONTEND_VERSION"
-    else
-        echo "@nationalarchives/frontend not found in package.json, skipping..."
-    fi
-fi
+# Update TNA Frontend
+$(dirname $0)/upgrade_npm_dependency.sh "$APPLICATION_DIRECTORY" "@nationalarchives/frontend" "$TNA_FRONTEND_VERSION"
 
-# Update TNA Frontend Jinja in pyproject.toml
-if [[ -f "$APPLICATION_DIRECTORY/pyproject.toml" ]]
-then
-    if docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" exec app poetry show tna-frontend-jinja > /dev/null 2>&1;
-    then
-        echo "Updating tna-frontend-jinja to version $TNA_FRONTEND_JINJA_VERSION"
-        docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" exec app poetry add tna-frontend-jinja="$TNA_FRONTEND_JINJA_VERSION" --no-cache
-    else
-        echo "tna-frontend-jinja not found in pyproject.toml, skipping..."
-    fi
-fi
+# Restart the application to ensure the new version of TNA Frontend is used
+docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" restart app
 
-# docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" build --no-cache
+# Update TNA Frontend Jinja
+$(dirname $0)/upgrade_poetry_dependency.sh "$APPLICATION_DIRECTORY" "tna-frontend-jinja" "$TNA_FRONTEND_JINJA_VERSION"
+
+# Restart the application to ensure the new version of TNA Frontend Jinja is used
 docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" restart app

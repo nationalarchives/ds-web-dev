@@ -3,24 +3,16 @@
 set -e
 
 # Get the versions
-TNA_FRONTEND_VERSION=$1
-TNA_FRONTEND_JINJA_VERSION=$2
+TNA_PYTHON_UTILITIES_VERSION=$1
 
 # Error if no version was passed
-if [[ -z "$TNA_FRONTEND_VERSION" ]]
+if [[ -z "$TNA_PYTHON_UTILITIES_VERSION" ]]
 then
-  echo -e "Error: versions of TNA Frontend not specified\n";
+  echo -e "Error: version of TNA Python Utilities not specified\n";
   echo "PARAMETERS"
-  echo "  tna-frontend         the version of TNA Frontend to use"
-  echo "  [tna-frontend-jinja] the version of TNA Frontend Jinja to use (optional)"
-  echo "                       Example: tna_frontend_upgrade_all.sh services/ds-frontend 0.30.2 0.30.0";
+  echo "  tna-python-utilities the version of TNA Python Utilities to use"
+  echo "                       Example: tna_python_utilities_upgrade_all.sh services/ds-frontend 0.30.2";
   exit 1
-fi
-
-# If no TNA Frontend Jinja version is passed, use the same as TNA Frontend
-if [[ -z "$TNA_FRONTEND_JINJA_VERSION" ]]
-then
-  TNA_FRONTEND_JINJA_VERSION=$TNA_FRONTEND_VERSION
 fi
 
 # Get the list of services
@@ -52,22 +44,18 @@ then
     git pull
 
     # Create a new branch for the upgrade
-    git checkout -b "chore/tna-frontend-$TNA_FRONTEND_VERSION" || git checkout "chore/tna-frontend-$TNA_FRONTEND_VERSION"
+    git checkout -b "chore/tna-python-utilities-$TNA_PYTHON_UTILITIES_VERSION" || git checkout "chore/tna-python-utilities-$TNA_PYTHON_UTILITIES_VERSION"
     git pull origin main
 
-    # Upgrade TNA Frontend for each service
-    $(dirname $0)/tna_frontend_upgrade_service.sh . "$TNA_FRONTEND_VERSION" "$TNA_FRONTEND_JINJA_VERSION"
+    # Upgrade TNA Python Utilities for each service
+    $(dirname $0)/tna_python_utilities_upgrade_service.sh . "$TNA_PYTHON_UTILITIES_VERSION"
 
     # Commit and push the changes
     git add package.json package-lock.json pyproject.toml poetry.lock
     
-    if [[ "$TNA_FRONTEND_VERSION" == "$TNA_FRONTEND_JINJA_VERSION" ]]
-    then
-      COMMIT_MESSAGE="Upgrade TNA Frontend and TNA Frontend Jinja to version $TNA_FRONTEND_VERSION"
-    else
-      COMMIT_MESSAGE="Upgrade TNA Frontend to version $TNA_FRONTEND_VERSION and TNA Frontend Jinja to version $TNA_FRONTEND_JINJA_VERSION"
-    fi
-    PR_URL="https://github.com/nationalarchives/$service/compare/chore/tna-frontend-$TNA_FRONTEND_VERSION?expand=1"
+    COMMIT_MESSAGE="Upgrade TNA Python Utilities to version $TNA_PYTHON_UTILITIES_VERSION"
+
+    PR_URL="https://github.com/nationalarchives/$service/compare/chore/tna-python-utilities-$TNA_PYTHON_UTILITIES_VERSION?expand=1"
     (git commit -m "$COMMIT_MESSAGE" && git push && (open "$PR_URL" || start "$PR_URL" || explorer.exe "$PR_URL")) || echo "No changes to commit for $service"
 
     # If the original branch was not main, check it out again
