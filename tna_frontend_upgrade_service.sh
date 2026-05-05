@@ -50,13 +50,13 @@ echo "Updating TNA Frontend in $APPLICATION_DIRECTORY..."
 docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" up --remove-orphans --detach --wait --wait-timeout 120
 
 # Update TNA Frontend
-$(dirname $0)/upgrade_npm_dependency.sh "$APPLICATION_DIRECTORY" "@nationalarchives/frontend" "$TNA_FRONTEND_VERSION"
+"$(dirname "$0")/upgrade_npm_dependency.sh" "$APPLICATION_DIRECTORY" "@nationalarchives/frontend" "$TNA_FRONTEND_VERSION"
 
 # Restart the application to ensure the new version of TNA Frontend is used
 docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" restart app
 
 # Update TNA Frontend Jinja
-$(dirname $0)/upgrade_poetry_dependency.sh "$APPLICATION_DIRECTORY" "tna-frontend-jinja" "$TNA_FRONTEND_JINJA_VERSION"
+"$(dirname "$0")/upgrade_poetry_dependency.sh" "$APPLICATION_DIRECTORY" "tna-frontend-jinja" "$TNA_FRONTEND_JINJA_VERSION"
 
 # Restart the application to ensure the new version of TNA Frontend Jinja is used
 docker compose --file "$APPLICATION_DIRECTORY/docker-compose.yml" restart app

@@ -22,6 +22,6 @@ for service in "${services[@]}"
 do
     cd "services/$service"
     BRANCH="$(git rev-parse --abbrev-ref HEAD)"
-    echo "$service$(printf -- ' '%.s $(seq -s ' ' $(($LONGEST_SERVICE_NAME_LENGTH-${#service}+3))))$BRANCH"
+    echo "$service$(printf -- ' '%.s $(seq -s ' ' $((LONGEST_SERVICE_NAME_LENGTH-${#service}+3))))$BRANCH"
     cd "../.."
 done

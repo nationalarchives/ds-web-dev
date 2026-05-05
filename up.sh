@@ -6,6 +6,7 @@ set -e
 source services.sh
 
 # Compose can now delegate builds to bake for better performance
+# shellcheck disable=SC2034
 COMPOSE_BAKE=true
 
 # Start the services

@@ -48,7 +48,7 @@ then
     git pull origin main
 
     # Upgrade TNA Python Utilities for each service
-    $(dirname $0)/tna_python_utilities_upgrade_service.sh . "$TNA_PYTHON_UTILITIES_VERSION"
+    "$(dirname "$0")/tna_python_utilities_upgrade_service.sh" . "$TNA_PYTHON_UTILITIES_VERSION"
 
     # Commit and push the changes
     git add package.json package-lock.json pyproject.toml poetry.lock
