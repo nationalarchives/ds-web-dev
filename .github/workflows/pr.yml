@@ -23,4 +23,4 @@ jobs:
       - name: Shellcheck
         run: find . -type f -exec shellcheck -x {} \;
       - name: Initialise
-        run: ./init.sh
+        run: ./init.sh --https
