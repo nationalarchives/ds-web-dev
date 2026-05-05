@@ -6,7 +6,15 @@ set -e
 source services.sh
 
 # Compose can now delegate builds to bake for better performance
+# shellcheck disable=SC2034
 COMPOSE_BAKE=true
+
+# Check if the user wants to use HTTPS or not (defaults to SSH)
+CLONE_WITH_SSH=true
+if [[ "$1" == "--https" ]]
+then
+    CLONE_WITH_SSH=false
+fi
 
 # Stop nginx if it is running
 docker compose down
@@ -31,8 +39,14 @@ for service in "${services[@]}"
 do
     if [[ ! -d "services/$service" ]]
     then
-        echo "Cloning $service..."
-        git clone "git@github.com:nationalarchives/$service.git" "services/$service"
+        if [[ "$CLONE_WITH_SSH" == true ]]
+        then
+            echo "Cloning $service with SSH..."
+            git clone "git@github.com:nationalarchives/$service.git" "services/$service"
+        else
+            echo "Cloning $service with HTTPS..."
+            git clone "https://github.com/nationalarchives/$service.git" "services/$service"
+        fi
         echo
     fi
 
@@ -52,8 +66,14 @@ done
 # Clone the website tests
 if [[ ! -d "tests" ]]
 then
-    echo "Cloning tests..."
-    git clone git@github.com:nationalarchives/ds-tna-website-tests.git tests
+    if [[ "$CLONE_WITH_SSH" == true ]]
+    then
+        echo "Cloning tests with SSH..."
+        git clone "git@github.com:nationalarchives/ds-tna-website-tests.git" tests
+    else
+        echo "Cloning tests with HTTPS..."
+        git clone "https://github.com/nationalarchives/ds-tna-website-tests.git" tests
+    fi
     # cp "tests/.example.env" "tests/.env"
     echo
 fi

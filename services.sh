@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Define the list of services - these are the names of the repositories in the nationalarchives GitHub organisation
+# shellcheck disable=SC2034
 declare -a services=(
     "ds-catalogue"
     "ds-forms"

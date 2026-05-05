@@ -8,8 +8,10 @@ A local development setup for all the services required to run `nationalarchives
 # If you want to pull content and media from the development site, log in with the AWS CLI
 aws sso login
 
-# Clone, set up and start all the services
+# Clone, set up and start all the services (using SSH)
 ./init.sh
+# OR clone services with HTTPS
+./init.sh --https
 ```
 
 After running `./init.sh`, the required services will be cloned into the `services` directory.
