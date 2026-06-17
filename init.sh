@@ -50,7 +50,12 @@ do
         echo
     fi
 
-    if [[ -f "services/$service/.example.env" ]]
+    if [[ -f "services/$service/.env.example" ]]
+    then
+        echo "Copying example .env for $service..."
+        cp "services/$service/.env.example" "services/$service/.env"
+        echo
+    elif [[ -f "services/$service/.example.env" ]]
     then
         echo "Copying example .env for $service..."
         cp "services/$service/.example.env" "services/$service/.env"
