@@ -93,12 +93,10 @@ done
 
 # Set up the frontend dependencies for development
 echo "Set up the frontend dependencies..."
-docker compose --file services/ds-frontend/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
-docker compose --file services/ds-frontend-enrichment/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
-docker compose --file services/ds-catalogue/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
-docker compose --file services/ds-sitemap-search/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
-docker compose --file services/ds-request-service-record/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
-docker compose --file services/wa-frontend/docker-compose.yml exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
+for service in "${services_with_tna_frontend[@]}"
+do
+    docker compose --file "services/$service/docker-compose.yml" exec app /bin/bash -c "tna-build && cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static"
+done
 
 # Start the nginx service
 echo "Starting nginx..."
