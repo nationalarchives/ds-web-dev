@@ -1,10 +1,7 @@
-name: Pull request
+name: Shellcheck
 
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
+  push:
 
 permissions:
   contents: read
