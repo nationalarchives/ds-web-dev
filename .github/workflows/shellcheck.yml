@@ -7,8 +7,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: pull-request-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.ref }}
 
 jobs:
   test:
