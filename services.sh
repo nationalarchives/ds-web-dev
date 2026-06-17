@@ -14,7 +14,7 @@ declare -a services=(
     "ds-wagtail"
     "wa-frontend"
 )
-declare -a services_with_frontend=(
+declare -a services_with_tna_frontend=(
     "ds-catalogue"
     "ds-forms"
     "ds-frontend"
