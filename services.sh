@@ -12,5 +12,5 @@ declare -a services=(
     "ds-service-status"
     "ds-sitemap-search"
     "ds-wagtail"
-    # "wa-frontend"
+    "wa-frontend"
 )
