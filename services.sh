@@ -12,5 +12,16 @@ declare -a services=(
     "ds-service-status"
     "ds-sitemap-search"
     "ds-wagtail"
-    # "wa-frontend"
+    "wa-frontend"
+)
+declare -a services_with_tna_frontend=(
+    "ds-catalogue"
+    "ds-forms"
+    "ds-frontend"
+    "ds-frontend-enrichment"
+    "ds-hospital-records"
+    "ds-request-service-record"
+    "ds-service-status"
+    "ds-sitemap-search"
+    "wa-frontend"
 )

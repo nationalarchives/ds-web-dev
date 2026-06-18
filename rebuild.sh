@@ -12,6 +12,10 @@ COMPOSE_BAKE=true
 # Stop nginx
 docker compose down
 
+# Pull the latest base Python Docker images
+docker pull ghcr.io/nationalarchives/tna-python-dev:preview
+docker pull ghcr.io/nationalarchives/tna-python-dev:latest
+
 # Rebuild the services
 for service in "${services[@]}"
 do
@@ -20,5 +24,8 @@ do
     echo
 done
 
+# Refresh the Wagtail API keys
+./refresh_wagtail_api_keys.sh
+
 # Start the services
-./init.sh
+./up.sh
