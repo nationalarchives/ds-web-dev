@@ -3,6 +3,7 @@
 # Define the list of services - these are the names of the repositories in the nationalarchives GitHub organisation
 # shellcheck disable=SC2034
 declare -a services=(
+    "ds-bulk-download"
     "ds-catalogue"
     "ds-forms"
     "ds-frontend"
@@ -15,6 +16,7 @@ declare -a services=(
     "wa-frontend"
 )
 declare -a services_with_tna_frontend=(
+    "ds-bulk-download"
     "ds-catalogue"
     "ds-forms"
     "ds-frontend"
