@@ -25,3 +25,10 @@ declare -a services_with_tna_frontend=(
     "ds-sitemap-search"
     "wa-frontend"
 )
+# Services that depend on the Wagtail API key - these are the services that have a .env file with the WAGTAIL_API_KEY variable
+declare -a wagtail_dependant_services=(
+    "services/ds-catalogue"
+    "services/ds-frontend"
+    "services/wa-frontend"
+    "."
+)
