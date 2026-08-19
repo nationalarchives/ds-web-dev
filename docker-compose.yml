@@ -4,12 +4,14 @@ services:
     ports:
       - 80:80
       - 443:443
+    depends_on:
+      - wagtaildocs
     volumes:
       - ./ssl/localhost.crt:/etc/nginx/ssl/live/localhost/localhost.crt:ro
       - ./ssl/localhost.key:/etc/nginx/ssl/live/localhost/localhost.key:ro
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
 
-  app:
+  wagtaildocs:
     container_name: wagtail-docs
     build:
       context: services/ds-frontend
