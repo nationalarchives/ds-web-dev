@@ -56,10 +56,19 @@ then
     git pull origin main
 
     # Upgrade TNA Frontend for each service
-    "$(dirname "$0")/tna_frontend_upgrade_service.sh" . "$TNA_FRONTEND_VERSION" "$TNA_FRONTEND_JINJA_VERSION"
+    cd "../.."
+    "$(dirname "$0")/tna_frontend_upgrade_service.sh" "services/$service" "$TNA_FRONTEND_VERSION" "$TNA_FRONTEND_JINJA_VERSION"
+    cd "services/$service"
 
     # Commit and push the changes
-    git add package.json package-lock.json pyproject.toml poetry.lock
+    if [[ -f "package.json" ]]
+    then
+        git add package.json package-lock.json
+    fi
+    if [[ -f "pyproject.toml" ]]
+    then
+        git add pyproject.toml poetry.lock
+    fi
     
     if [[ "$TNA_FRONTEND_VERSION" == "$TNA_FRONTEND_JINJA_VERSION" ]]
     then
