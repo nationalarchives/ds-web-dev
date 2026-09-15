@@ -5,6 +5,7 @@
 declare -a services=(
     "ds-bulk-download"
     "ds-catalogue"
+    "ds-feedback"
     "ds-forms"
     "ds-frontend"
     "ds-frontend-enrichment"
@@ -18,6 +19,7 @@ declare -a services=(
 declare -a services_with_tna_frontend=(
     "ds-bulk-download"
     "ds-catalogue"
+    "ds-feedback"
     "ds-forms"
     "ds-frontend"
     "ds-frontend-enrichment"
