@@ -36,6 +36,9 @@ When running `./init.sh`, there is a check for this file and if it exists, Wagta
 # Show the git status of each service
 ./gitstatus.sh
 
+# Check out the main branch of all services and pull all updates
+./checkout_main.sh
+
 # Run the test suite
 ./test.sh
 
