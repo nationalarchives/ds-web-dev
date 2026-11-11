@@ -18,6 +18,10 @@ After running `./init.sh`, the required services will be cloned into the `servic
 
 Services that have an `example.env` file will have a copy made for `.env`. From there, you may need to add the required variables in your `.env` files to get the service to work.
 
+### Shared error pages
+
+The nginx proxy replaces intercepted service errors with the frontend's shared HTML error pages. It preserves the original response's `Vary` header alongside any `Vary` headers returned by the shared error page.
+
 ### Initialise with a Wagtail database dump
 
 Rather than pulling content from AWS (if you don't have access to do so), you can initialise Wagtail using a database dump. Place your SQL file in the root of **this** project (`ds-web-dev`) and call it `wagtail-init.sql`.
